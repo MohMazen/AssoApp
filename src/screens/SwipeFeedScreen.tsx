@@ -18,7 +18,7 @@ import Animated, {
   runOnJS,
   Easing,
 } from 'react-native-reanimated';
-import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Card, Need } from '../types/Association';
 import { Colors, Shadows, Spacing } from '../constants/colors';
 import { mockCards } from '../constants/mockData';
@@ -180,7 +180,7 @@ export const SwipeFeedScreen: React.FC<SwipeFeedScreenProps> = ({
   }
 
   return (
-    <GestureHandlerRootView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.logo}>💚 CoeurMatch</Text>
         <Text style={styles.subtitle}>
@@ -298,7 +298,7 @@ export const SwipeFeedScreen: React.FC<SwipeFeedScreenProps> = ({
           <Ionicons name="heart" size={32} color={Colors.success} />
         </TouchableOpacity>
       </View>
-    </GestureHandlerRootView>
+    </View>
   );
 };
 
