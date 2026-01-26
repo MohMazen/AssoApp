@@ -1,5 +1,6 @@
-import { Association } from '../types/Association';
+import { Association, Card, Match } from '../types/Association';
 
+// Legacy mock data
 export const mockAssociations: Association[] = [
   {
     id: '1',
@@ -40,5 +41,151 @@ export const mockAssociations: Association[] = [
     category: 'Environnement',
     imageUrl: 'https://picsum.photos/seed/asso5/400/600',
     memberCount: 28000,
+  },
+];
+
+// CoeurMatch Card mock data
+export const mockCards: Card[] = [
+  {
+    id: '1',
+    associationName: 'Les Restos du Cœur',
+    projectTitle: 'Distribution alimentaire hiver 2024',
+    location: 'Paris, France',
+    videoUrl: 'https://youtube.com/watch?v=example1',
+    coverImage: 'https://picsum.photos/seed/resto1/400/600',
+    description: 'Aidez-nous à distribuer des repas chauds aux plus démunis pendant la période hivernale. Chaque hiver, des milliers de personnes comptent sur nous pour un repas chaud. Rejoignez notre mission !',
+    tags: ['Alimentaire', 'Social', 'Urgence'],
+    needs: ['donations', 'volunteers'],
+    needsDetails: {
+      donations: 'Nous avons besoin de 50 000€ pour acheter des denrées alimentaires',
+      volunteers: 'Recherche de 200 bénévoles pour la distribution',
+      equipment: '',
+      employees: '',
+    },
+    socialLinks: {
+      website: 'https://restosducoeur.org',
+      facebook: 'https://facebook.com/restosducoeur',
+      donationPage: 'https://don.restosducoeur.org',
+    },
+    createdAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: '2',
+    associationName: 'Greenpeace France',
+    projectTitle: 'Sauvons les océans plastique-free',
+    location: 'Marseille, France',
+    videoUrl: 'https://youtube.com/watch?v=example2',
+    coverImage: 'https://picsum.photos/seed/green1/400/600',
+    description: 'Notre mission : nettoyer les plages et sensibiliser les citoyens à la pollution plastique. Ensemble, faisons de la Méditerranée une mer propre pour les générations futures.',
+    tags: ['Environnement', 'Océans', 'Écologie'],
+    needs: ['volunteers', 'donations'],
+    needsDetails: {
+      donations: 'Financer l\'achat de matériel de nettoyage',
+      volunteers: 'Bénévoles pour les opérations de nettoyage',
+      equipment: '',
+      employees: '',
+    },
+    socialLinks: {
+      website: 'https://greenpeace.fr',
+      instagram: 'https://instagram.com/greenpeacefr',
+      facebook: 'https://facebook.com/greenpeacefrance',
+    },
+    createdAt: '2024-01-20T14:30:00Z',
+  },
+  {
+    id: '3',
+    associationName: 'Médecins Sans Frontières',
+    projectTitle: 'Mission médicale d\'urgence Gaza',
+    location: 'International',
+    videoUrl: 'https://youtube.com/watch?v=example3',
+    coverImage: 'https://picsum.photos/seed/msf1/400/600',
+    description: 'Apporter une aide médicale vitale aux populations civiles touchées par les conflits. Chaque don compte pour sauver des vies dans les zones les plus difficiles d\'accès.',
+    tags: ['Humanitaire', 'Médical', 'Urgence'],
+    needs: ['donations', 'employees'],
+    needsDetails: {
+      donations: 'Financement de médicaments et équipements médicaux',
+      volunteers: '',
+      equipment: '',
+      employees: 'Recrutement de médecins et infirmiers volontaires',
+    },
+    socialLinks: {
+      website: 'https://msf.fr',
+      donationPage: 'https://don.msf.fr',
+      facebook: 'https://facebook.com/msf',
+    },
+    createdAt: '2024-01-10T08:00:00Z',
+  },
+  {
+    id: '4',
+    associationName: 'La Croix-Rouge Française',
+    projectTitle: 'Formation aux premiers secours',
+    location: 'Lyon, France',
+    videoUrl: 'https://youtube.com/watch?v=example4',
+    coverImage: 'https://picsum.photos/seed/croixrouge1/400/600',
+    description: 'Former 10 000 personnes aux gestes qui sauvent cette année. Parce que chacun peut être le premier maillon de la chaîne de secours, rejoignez notre initiative.',
+    tags: ['Formation', 'Secourisme', 'Prévention'],
+    needs: ['volunteers', 'equipment', 'donations'],
+    needsDetails: {
+      donations: 'Achat de mannequins et matériel de formation',
+      volunteers: 'Formateurs bénévoles certifiés',
+      equipment: 'Défibrillateurs et kits de secours',
+      employees: '',
+    },
+    socialLinks: {
+      website: 'https://croix-rouge.fr',
+      instagram: 'https://instagram.com/croixrougefr',
+      facebook: 'https://facebook.com/croixrouge',
+    },
+    createdAt: '2024-01-18T11:00:00Z',
+  },
+  {
+    id: '5',
+    associationName: 'WWF France',
+    projectTitle: 'Protection des espèces menacées',
+    location: 'Guyane Française',
+    videoUrl: 'https://youtube.com/watch?v=example5',
+    coverImage: 'https://picsum.photos/seed/wwf1/400/600',
+    description: 'Préserver la biodiversité exceptionnelle de la forêt amazonienne française. Chaque euro donné contribue directement à la protection des espèces en danger d\'extinction.',
+    tags: ['Biodiversité', 'Faune', 'Conservation'],
+    needs: ['donations', 'volunteers', 'employees'],
+    needsDetails: {
+      donations: 'Financement des programmes de conservation',
+      volunteers: 'Éco-volontaires pour le terrain',
+      equipment: '',
+      employees: 'Biologistes et chercheurs',
+    },
+    socialLinks: {
+      website: 'https://wwf.fr',
+      instagram: 'https://instagram.com/wwffrance',
+      donationPage: 'https://don.wwf.fr',
+    },
+    createdAt: '2024-01-12T09:30:00Z',
+  },
+];
+
+// Mock matches data
+export const mockMatches: Match[] = [
+  {
+    id: 'm1',
+    cardId: '1',
+    card: mockCards[0],
+    matchedAt: '2024-01-25T15:00:00Z',
+    donated: true,
+    donationAmount: 20,
+  },
+  {
+    id: 'm2',
+    cardId: '3',
+    card: mockCards[2],
+    matchedAt: '2024-01-24T10:30:00Z',
+    donated: false,
+  },
+  {
+    id: 'm3',
+    cardId: '5',
+    card: mockCards[4],
+    matchedAt: '2024-01-23T18:45:00Z',
+    donated: true,
+    donationAmount: 50,
   },
 ];
