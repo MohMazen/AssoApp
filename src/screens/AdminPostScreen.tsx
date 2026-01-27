@@ -347,14 +347,14 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: Spacing.md,
-    paddingTop: Spacing.xl + Spacing.lg,
+    paddingTop: Spacing.lg,
     paddingBottom: Spacing.md,
     backgroundColor: Colors.white,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     color: Colors.text,
   },
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
   },
   inputGroup: {
-    marginBottom: Spacing.lg,
+    marginBottom: Spacing.md,
   },
   label: {
     fontSize: 16,
@@ -475,7 +475,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     borderStyle: 'dashed',
     borderRadius: 12,
-    paddingVertical: Spacing.xl,
+    paddingVertical: Spacing.lg,
     alignItems: 'center',
     justifyContent: 'center',
   },

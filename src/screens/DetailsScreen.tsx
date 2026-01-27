@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: Spacing.md,
-    paddingTop: Spacing.xl + Spacing.md,
+    paddingTop: Spacing.lg + Spacing.md,
     paddingBottom: Spacing.md,
     backgroundColor: Colors.white,
     borderBottomWidth: 1,

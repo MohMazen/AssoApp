@@ -1,11 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Association } from '../types/Association';
-import { Colors } from '../constants/colors';
+import { Colors, CardDimensions } from '../constants/colors';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const CARD_WIDTH = SCREEN_WIDTH * 0.9;
-const CARD_HEIGHT = CARD_WIDTH * 1.4;
+const { CARD_WIDTH, CARD_HEIGHT } = CardDimensions;
 
 interface SwipeCardProps {
   association: Association;
@@ -54,7 +52,7 @@ const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'space-between',
-    padding: 16,
+    padding: 12,
   },
   categoryBadge: {
     alignSelf: 'flex-start',
@@ -71,7 +69,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 16,
-    padding: 16,
+    padding: 12,
   },
   name: {
     fontSize: 22,

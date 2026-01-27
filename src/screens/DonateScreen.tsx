@@ -216,14 +216,14 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: Spacing.md,
-    paddingTop: Spacing.xl + Spacing.lg,
+    paddingTop: Spacing.lg,
     paddingBottom: Spacing.md,
     backgroundColor: Colors.white,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     color: Colors.text,
   },
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
   },
   impactSection: {
     backgroundColor: Colors.white,
-    padding: Spacing.lg,
+    padding: Spacing.md,
     marginTop: Spacing.sm,
     alignItems: 'center',
   },
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
     color: Colors.textSecondary,
   },
   bottomSpacer: {
-    height: 120,
+    height: 100,
   },
   ctaContainer: {
     position: 'absolute',
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: Spacing.md,
-    paddingBottom: Spacing.xl,
+    paddingBottom: Spacing.lg,
     backgroundColor: Colors.white,
     borderTopWidth: 1,
     borderTopColor: Colors.border,

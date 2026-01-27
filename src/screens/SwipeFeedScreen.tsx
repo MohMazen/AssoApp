@@ -20,13 +20,10 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Card, Need } from '../types/Association';
-import { Colors, Shadows, Spacing } from '../constants/colors';
+import { Colors, Shadows, Spacing, CardDimensions } from '../constants/colors';
 import { mockCards } from '../constants/mockData';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const CARD_WIDTH = SCREEN_WIDTH * 0.9;
-const CARD_HEIGHT = SCREEN_HEIGHT * 0.65;
-const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.25;
+const { CARD_WIDTH, CARD_HEIGHT, SWIPE_THRESHOLD, SCREEN_WIDTH } = CardDimensions;
 
 interface SwipeFeedScreenProps {
   onInfo?: (card: Card) => void;
@@ -224,7 +221,7 @@ export const SwipeFeedScreen: React.FC<SwipeFeedScreenProps> = ({
 
             {/* Video placeholder */}
             <View style={styles.videoPlaceholder}>
-              <Ionicons name="play-circle" size={48} color={Colors.white} />
+              <Ionicons name="play-circle" size={40} color={Colors.white} />
               <Text style={styles.videoText}>Vidéo 16:9</Text>
             </View>
 
@@ -309,16 +306,16 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    paddingVertical: Spacing.md,
-    paddingTop: Spacing.xl,
+    paddingVertical: Spacing.sm,
+    paddingTop: Spacing.lg,
   },
   logo: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     color: Colors.primary,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 12,
     color: Colors.textSecondary,
     marginTop: Spacing.xs,
     textAlign: 'center',
@@ -389,7 +386,7 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -50 }],
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: Spacing.md,
+    padding: Spacing.sm,
     borderRadius: 12,
   },
   videoText: {
@@ -402,7 +399,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    padding: Spacing.md,
+    padding: Spacing.sm,
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -432,11 +429,11 @@ const styles = StyleSheet.create({
   projectTitle: {
     fontSize: 14,
     color: Colors.textSecondary,
-    marginBottom: Spacing.sm,
+    marginBottom: Spacing.xs,
   },
   tagsContainer: {
     flexDirection: 'row',
-    marginBottom: Spacing.sm,
+    marginBottom: Spacing.xs,
   },
   tag: {
     backgroundColor: Colors.secondary,
@@ -453,7 +450,7 @@ const styles = StyleSheet.create({
   needsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: Spacing.sm,
+    marginTop: Spacing.xs,
   },
   needIcon: {
     alignItems: 'center',
@@ -463,7 +460,7 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   needEmoji: {
-    fontSize: 24,
+    fontSize: 20,
   },
   needLabel: {
     fontSize: 10,
@@ -479,8 +476,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 40,
-    paddingVertical: Spacing.lg,
-    paddingBottom: Spacing.md,
+    paddingVertical: Spacing.md,
+    paddingBottom: Spacing.sm,
   },
   actionButton: {
     width: 64,
