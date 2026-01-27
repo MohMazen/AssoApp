@@ -20,13 +20,10 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Card, Need } from '../types/Association';
-import { Colors, Shadows, Spacing } from '../constants/colors';
+import { Colors, Shadows, Spacing, CardDimensions } from '../constants/colors';
 import { mockCards } from '../constants/mockData';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const CARD_WIDTH = SCREEN_WIDTH * 0.92;
-const CARD_HEIGHT = SCREEN_HEIGHT * 0.65;
-const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.25;
+const { CARD_WIDTH, CARD_HEIGHT, SWIPE_THRESHOLD, SCREEN_WIDTH } = CardDimensions;
 
 interface SwipeFeedScreenProps {
   onInfo?: (card: Card) => void;

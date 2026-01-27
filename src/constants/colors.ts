@@ -1,3 +1,5 @@
+import { Dimensions } from 'react-native';
+
 export const Colors = {
   primary: '#FF6B6B',
   primaryDark: '#EE5A5A',
@@ -32,4 +34,15 @@ export const Spacing = {
   md: 16,
   lg: 24,
   xl: 32,
+};
+
+// Card dimensions for consistent sizing across components
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+
+export const CardDimensions = {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  CARD_WIDTH: SCREEN_WIDTH * 0.92,
+  CARD_HEIGHT: SCREEN_HEIGHT * 0.65,
+  SWIPE_THRESHOLD: SCREEN_WIDTH * 0.25,
 };

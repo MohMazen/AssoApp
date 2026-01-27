@@ -1,11 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 import { Association } from '../types/Association';
-import { Colors } from '../constants/colors';
+import { Colors, CardDimensions } from '../constants/colors';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const CARD_WIDTH = SCREEN_WIDTH * 0.92;
-const CARD_HEIGHT = SCREEN_HEIGHT * 0.65;
+const { CARD_WIDTH, CARD_HEIGHT } = CardDimensions;
 
 interface SwipeCardProps {
   association: Association;
