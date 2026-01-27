@@ -171,14 +171,14 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: Spacing.md,
-    paddingTop: Spacing.xl + Spacing.lg,
+    paddingTop: Spacing.lg,
     paddingBottom: Spacing.md,
     backgroundColor: Colors.white,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     color: Colors.text,
   },
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
   avatarSection: {
     alignItems: 'center',
     backgroundColor: Colors.white,
-    paddingVertical: Spacing.xl,
+    paddingVertical: Spacing.lg,
     marginTop: Spacing.sm,
   },
   avatar: {
