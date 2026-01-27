@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Association } from '../types/Association';
 import { Colors, CardDimensions } from '../constants/colors';
 

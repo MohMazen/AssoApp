@@ -37,12 +37,21 @@ export const Spacing = {
 };
 
 // Card dimensions for consistent sizing across components
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-
+// Use getter functions to support orientation changes
 export const CardDimensions = {
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  CARD_WIDTH: SCREEN_WIDTH * 0.92,
-  CARD_HEIGHT: SCREEN_HEIGHT * 0.65,
-  SWIPE_THRESHOLD: SCREEN_WIDTH * 0.25,
+  get SCREEN_WIDTH() {
+    return Dimensions.get('window').width;
+  },
+  get SCREEN_HEIGHT() {
+    return Dimensions.get('window').height;
+  },
+  get CARD_WIDTH() {
+    return this.SCREEN_WIDTH * 0.92;
+  },
+  get CARD_HEIGHT() {
+    return this.SCREEN_HEIGHT * 0.65;
+  },
+  get SWIPE_THRESHOLD() {
+    return this.SCREEN_WIDTH * 0.25;
+  },
 };
