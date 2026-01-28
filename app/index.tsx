@@ -35,10 +35,10 @@ export default function Index() {
     const card = mockCards.find(c => c.id === cardId);
     if (card) {
       setSelectedCard(card);
-      setPreviousScreen('history');
+      setPreviousScreen(currentScreen);
       setCurrentScreen('details');
     }
-  }, []);
+  }, [currentScreen]);
 
   const handleBack = useCallback(() => {
     setCurrentScreen(previousScreen);
