@@ -27,6 +27,7 @@ interface PaymentScreenProps {
 }
 
 const QUICK_AMOUNTS = [5, 10, 20, 50, 100];
+const MAX_DONATION_AMOUNT = 10000; // Maximum donation of 10,000€
 
 export const PaymentScreen: React.FC<PaymentScreenProps> = ({
   recipient,
@@ -48,6 +49,11 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
     const parts = cleaned.split('.');
     if (parts.length > 2) return;
     
+    // Limit to 2 decimal places for currency
+    if (parts.length === 2 && parts[1].length > 2) {
+      return;
+    }
+    
     setCustomAmount(cleaned);
     setSelectedAmount(null);
   };
@@ -68,6 +74,15 @@ export const PaymentScreen: React.FC<PaymentScreenProps> = ({
       Alert.alert(
         'Montant invalide',
         'Le montant minimum est de 1€',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+
+    if (total > MAX_DONATION_AMOUNT) {
+      Alert.alert(
+        'Montant trop élevé',
+        `Le montant maximum est de ${MAX_DONATION_AMOUNT.toLocaleString('fr-FR')}€`,
         [{ text: 'OK' }]
       );
       return;

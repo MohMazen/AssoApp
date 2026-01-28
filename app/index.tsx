@@ -43,10 +43,15 @@ export default function Index() {
   }, [currentScreen]);
 
   const handleBack = useCallback(() => {
-    setCurrentScreen(previousScreen);
-    setSelectedCard(undefined);
-    setPaymentContext(null);
-  }, [previousScreen]);
+    if (currentScreen === 'payment') {
+      // When going back from payment, preserve selectedCard if it exists
+      setPaymentContext(null);
+      setCurrentScreen(previousScreen);
+    } else {
+      setCurrentScreen(previousScreen);
+      setSelectedCard(undefined);
+    }
+  }, [previousScreen, currentScreen]);
 
   const handleDonateToAssociation = useCallback((card: Card) => {
     setPaymentContext({ type: 'association', card });
@@ -61,8 +66,6 @@ export default function Index() {
   }, [currentScreen]);
 
   const handlePaymentComplete = useCallback((amount: number) => {
-    // Log ou logique future
-    console.log('Payment completed:', amount);
     // Retourner à l'écran précédent
     setCurrentScreen(previousScreen);
     setPaymentContext(null);
@@ -120,6 +123,11 @@ export default function Index() {
         );
       case 'payment':
         if (!paymentContext) return null;
+        
+        // Guard clause for association payments without card data
+        if (paymentContext.type === 'association' && !paymentContext.card) {
+          return null;
+        }
         
         const recipient = paymentContext.type === 'association' 
           ? {
