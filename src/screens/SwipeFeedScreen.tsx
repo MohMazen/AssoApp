@@ -3,11 +3,9 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
   Image,
   TouchableOpacity,
   ScrollView,
-  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, {
@@ -75,23 +73,18 @@ export const SwipeFeedScreen: React.FC<SwipeFeedScreenProps> = ({
   const currentCard = cards[currentIndex];
   const nextCard = cards[currentIndex + 1];
 
-  const showToast = useCallback((message: string) => {
-    Alert.alert('', message, [{ text: 'OK' }], { cancelable: true });
-  }, []);
-
   const handleSwipeComplete = useCallback((direction: 'left' | 'right') => {
     if (direction === 'right') {
       if (onMatch && currentCard) {
         onMatch(currentCard);
       }
-    } else {
     }
     setCurrentIndex((prev) => prev + 1);
     translateX.value = 0;
     translateY.value = 0;
     rotation.value = 0;
     scale.value = 1;
-  }, [currentCard, onMatch, showToast, translateX, translateY, rotation, scale]);
+  }, [currentCard, onMatch, translateX, translateY, rotation, scale]);
 
   const gesture = Gesture.Pan()
     .onUpdate((event) => {
