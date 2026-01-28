@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Switch,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Spacing } from '../constants/colors';
@@ -127,6 +128,42 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             <Ionicons
               name="chevron-forward"
               size={20}
+              color={Colors.textSecondary}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {/* Support CoeurMatch - NOUVELLE SECTION */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Soutenir CoeurMatch</Text>
+          <TouchableOpacity 
+            style={styles.supportButton} 
+            activeOpacity={0.7}
+            onPress={() => {
+              // TODO: Implémenter la logique de don pour le dev
+              Alert.alert(
+                '💚 Merci !',
+                'Cette fonctionnalité permettra de soutenir le développement de CoeurMatch.',
+                [{ text: 'OK' }]
+              );
+            }}
+          >
+            <View style={styles.supportContent}>
+              <Ionicons
+                name="code-slash"
+                size={32}
+                color={Colors.primary}
+              />
+              <View style={styles.supportText}>
+                <Text style={styles.supportTitle}>💚 Donner pour le développement</Text>
+                <Text style={styles.supportDescription}>
+                  Soutenez le développement et l&apos;amélioration de l&apos;application
+                </Text>
+              </View>
+            </View>
+            <Ionicons
+              name="chevron-forward"
+              size={24}
               color={Colors.textSecondary}
             />
           </TouchableOpacity>
@@ -267,6 +304,36 @@ const styles = StyleSheet.create({
   settingLabel: {
     fontSize: 16,
     color: Colors.text,
+  },
+  supportButton: {
+    backgroundColor: Colors.background,
+    padding: Spacing.md,
+    borderRadius: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 2,
+    borderColor: Colors.primary,
+  },
+  supportContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  supportText: {
+    marginLeft: Spacing.md,
+    flex: 1,
+  },
+  supportTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: Colors.text,
+    marginBottom: 4,
+  },
+  supportDescription: {
+    fontSize: 13,
+    color: Colors.textSecondary,
+    lineHeight: 18,
   },
   statsGrid: {
     flexDirection: 'row',

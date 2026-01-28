@@ -35,10 +35,10 @@ export default function Index() {
     const card = mockCards.find(c => c.id === cardId);
     if (card) {
       setSelectedCard(card);
-      setPreviousScreen('history');
+      setPreviousScreen(currentScreen);
       setCurrentScreen('details');
     }
-  }, []);
+  }, [currentScreen]);
 
   const handleBack = useCallback(() => {
     setCurrentScreen(previousScreen);
@@ -87,7 +87,9 @@ export default function Index() {
         );
       case 'donate':
         return (
-          <DonateScreen />
+          <DonateScreen 
+            onSelectAssociation={handleSelectMatch}
+          />
         );
       case 'profile':
         return (
