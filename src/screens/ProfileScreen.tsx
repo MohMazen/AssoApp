@@ -6,7 +6,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Switch,
-  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Spacing } from '../constants/colors';
@@ -14,11 +13,13 @@ import { Colors, Spacing } from '../constants/colors';
 interface ProfileScreenProps {
   isAssociation: boolean;
   onToggleRole: () => void;
+  onDonateToDevPage: () => void;
 }
 
 export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   isAssociation,
   onToggleRole,
+  onDonateToDevPage,
 }) => {
   const [notifications, setNotifications] = useState(true);
 
@@ -139,14 +140,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           <TouchableOpacity 
             style={styles.supportButton} 
             activeOpacity={0.7}
-            onPress={() => {
-              // TODO: Implémenter la logique de don pour le dev
-              Alert.alert(
-                '💚 Merci !',
-                'Cette fonctionnalité permettra de soutenir le développement de CoeurMatch.',
-                [{ text: 'OK' }]
-              );
-            }}
+            onPress={onDonateToDevPage}
           >
             <View style={styles.supportContent}>
               <Ionicons

@@ -36,7 +36,13 @@ export interface Match {
 }
 
 // Écrans de navigation
-export type Screen = 'feed' | 'details' | 'history' | 'admin' | 'profile' | 'donate';
+export type Screen = 'feed' | 'details' | 'history' | 'admin' | 'profile' | 'donate' | 'payment';
+
+// Contexte de paiement
+export interface PaymentContext {
+  type: 'association' | 'developer';
+  card?: Card; // Défini si type === 'association'
+}
 
 // Legacy type alias for backwards compatibility
 export interface Association {

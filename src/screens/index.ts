@@ -5,3 +5,4 @@ export { HistoryScreen } from './HistoryScreen';
 export { AdminPostScreen } from './AdminPostScreen';
 export { DonateScreen } from './DonateScreen';
 export { ProfileScreen } from './ProfileScreen';
+export { PaymentScreen } from './PaymentScreen';
