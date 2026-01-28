@@ -6,10 +6,11 @@ import {
   HistoryScreen, 
   AdminPostScreen, 
   DonateScreen,
-  ProfileScreen 
+  ProfileScreen,
+  PaymentScreen 
 } from '../src/screens';
 import { BottomNav } from '../src/navigation';
-import { Screen, Card } from '../src/types/Association';
+import { Screen, Card, PaymentContext } from '../src/types/Association';
 import { mockCards } from '../src/constants/mockData';
 
 export default function Index() {
@@ -17,6 +18,7 @@ export default function Index() {
   const [selectedCard, setSelectedCard] = useState<Card | undefined>(undefined);
   const [isAssociation, setIsAssociation] = useState(false);
   const [previousScreen, setPreviousScreen] = useState<Screen>('feed');
+  const [paymentContext, setPaymentContext] = useState<PaymentContext | null>(null);
 
   const handleNavigate = useCallback((screen: Screen) => {
     if (screen !== 'details') {
@@ -41,13 +43,33 @@ export default function Index() {
   }, [currentScreen]);
 
   const handleBack = useCallback(() => {
-    setCurrentScreen(previousScreen);
-    setSelectedCard(undefined);
-  }, [previousScreen]);
+    if (currentScreen === 'payment') {
+      // When going back from payment, preserve selectedCard if it exists
+      setPaymentContext(null);
+      setCurrentScreen(previousScreen);
+    } else {
+      setCurrentScreen(previousScreen);
+      setSelectedCard(undefined);
+    }
+  }, [previousScreen, currentScreen]);
 
-  const handleDonate = useCallback(() => {
-    setCurrentScreen('donate');
-  }, []);
+  const handleDonateToAssociation = useCallback((card: Card) => {
+    setPaymentContext({ type: 'association', card });
+    setPreviousScreen(currentScreen);
+    setCurrentScreen('payment');
+  }, [currentScreen]);
+
+  const handleDonateToDevPage = useCallback(() => {
+    setPaymentContext({ type: 'developer' });
+    setPreviousScreen(currentScreen);
+    setCurrentScreen('payment');
+  }, [currentScreen]);
+
+  const handlePaymentComplete = useCallback((amount: number) => {
+    // Retourner à l'écran précédent
+    setCurrentScreen(previousScreen);
+    setPaymentContext(null);
+  }, [previousScreen]);
 
   const handleToggleRole = useCallback(() => {
     setIsAssociation(prev => !prev);
@@ -70,7 +92,7 @@ export default function Index() {
           <DetailsScreen 
             card={selectedCard}
             onBack={handleBack}
-            onDonate={handleDonate}
+            onDonate={handleDonateToAssociation}
           />
         );
       case 'history':
@@ -96,6 +118,35 @@ export default function Index() {
           <ProfileScreen 
             isAssociation={isAssociation}
             onToggleRole={handleToggleRole}
+            onDonateToDevPage={handleDonateToDevPage}
+          />
+        );
+      case 'payment':
+        if (!paymentContext) return null;
+        
+        // Guard clause for association payments without card data
+        if (paymentContext.type === 'association' && !paymentContext.card) {
+          return null;
+        }
+        
+        const recipient = paymentContext.type === 'association' 
+          ? {
+              type: 'association' as const,
+              name: paymentContext.card?.associationName || '',
+              description: paymentContext.card?.projectTitle || '',
+              image: paymentContext.card?.coverImage,
+            }
+          : {
+              type: 'developer' as const,
+              name: 'Développement CoeurMatch',
+              description: 'Soutenez le développement et l\'amélioration de l\'application',
+            };
+        
+        return (
+          <PaymentScreen 
+            recipient={recipient}
+            onBack={handleBack}
+            onPaymentComplete={handlePaymentComplete}
           />
         );
       default:
@@ -107,8 +158,8 @@ export default function Index() {
     }
   };
 
-  // Don't show BottomNav on details screen
-  const showBottomNav = currentScreen !== 'details';
+  // Don't show BottomNav on details screen and payment screen
+  const showBottomNav = currentScreen !== 'details' && currentScreen !== 'payment';
 
   return (
     <View style={styles.container}>

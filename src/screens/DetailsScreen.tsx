@@ -19,7 +19,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 interface DetailsScreenProps {
   card?: Card;
   onBack: () => void;
-  onDonate: () => void;
+  onDonate: (card: Card) => void;
 }
 
 const getNeedIcon = (need: Need): string => {
@@ -192,7 +192,7 @@ export const DetailsScreen: React.FC<DetailsScreenProps> = ({
       <View style={styles.ctaContainer}>
         <TouchableOpacity
           style={styles.ctaButton}
-          onPress={onDonate}
+          onPress={() => onDonate(card)}
           activeOpacity={0.8}
         >
           <Ionicons name="heart" size={20} color={Colors.white} />
