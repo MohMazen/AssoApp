@@ -81,12 +81,10 @@ export const SwipeFeedScreen: React.FC<SwipeFeedScreenProps> = ({
 
   const handleSwipeComplete = useCallback((direction: 'left' | 'right') => {
     if (direction === 'right') {
-      showToast("C'est un match ! 💚");
       if (onMatch && currentCard) {
         onMatch(currentCard);
       }
     } else {
-      showToast('Peut-être une autre fois...');
     }
     setCurrentIndex((prev) => prev + 1);
     translateX.value = 0;
