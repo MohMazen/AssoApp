@@ -91,6 +91,7 @@ export default function Index() {
   }, [isAssociation, isAssociationLoggedIn, currentScreen]);
 
   const handleLoginSuccess = useCallback(() => {
+    // TODO: Replace with actual backend authentication
     // Pour l'instant, créer un compte mock
     const mockAccount: AssociationAccount = {
       id: '1',
@@ -251,11 +252,16 @@ export default function Index() {
           />
         );
       case 'signup-step2':
+        if (!signupStep1Data) {
+          // Safety check: if no signup data, redirect back
+          setCurrentScreen('signup-step1');
+          return null;
+        }
         return (
           <AssociationSignupStep2Screen
             onComplete={handleSignupStep2Complete}
             onBack={handleBack}
-            signupData={signupStep1Data!}
+            signupData={signupStep1Data}
           />
         );
       default:

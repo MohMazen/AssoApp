@@ -58,7 +58,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
       return;
     }
 
-    // For now, accept any email/password (backend integration pending)
+    // TODO: Replace with actual backend authentication
+    // WARNING: This currently accepts any email/password combination
+    // Backend integration required for production use
     onLoginSuccess();
   };
 

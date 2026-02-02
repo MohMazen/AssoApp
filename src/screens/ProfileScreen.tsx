@@ -52,11 +52,12 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             />
           </View>
           <Text style={styles.userName}>
-            {isAssociation && associationAccount
-              ? associationAccount.associationName
-              : isAssociation 
-                ? 'Mon Association' 
-                : 'Utilisateur'}
+            {(() => {
+              if (isAssociation && associationAccount) {
+                return associationAccount.associationName;
+              }
+              return isAssociation ? 'Mon Association' : 'Utilisateur';
+            })()}
           </Text>
           <Text style={styles.userType}>
             {isAssociation ? 'Compte Association' : 'Compte Donateur'}
