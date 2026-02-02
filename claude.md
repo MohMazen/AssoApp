@@ -157,7 +157,7 @@ app/
 - First-time associations: 2-step signup with RNA validation
 - Documents optional but recommended for verification
 
-**Stats**: +XXX additions, -XXX deletions, X files changed
+**Stats**: +1472 additions, -8 deletions, 8 files changed
 
 ---
 
