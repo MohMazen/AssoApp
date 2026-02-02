@@ -6,20 +6,28 @@ import {
   ScrollView,
   TouchableOpacity,
   Switch,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Spacing } from '../constants/colors';
+import { AssociationAccount } from '../types/Association';
 
 interface ProfileScreenProps {
   isAssociation: boolean;
+  isAssociationLoggedIn: boolean;
+  associationAccount?: AssociationAccount;
   onToggleRole: () => void;
   onDonateToDevPage: () => void;
+  onLogout?: () => void;
 }
 
 export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   isAssociation,
+  isAssociationLoggedIn,
+  associationAccount,
   onToggleRole,
   onDonateToDevPage,
+  onLogout,
 }) => {
   const [notifications, setNotifications] = useState(true);
 
@@ -44,7 +52,11 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             />
           </View>
           <Text style={styles.userName}>
-            {isAssociation ? 'Mon Association' : 'Utilisateur'}
+            {isAssociation && associationAccount
+              ? associationAccount.associationName
+              : isAssociation 
+                ? 'Mon Association' 
+                : 'Utilisateur'}
           </Text>
           <Text style={styles.userType}>
             {isAssociation ? 'Compte Association' : 'Compte Donateur'}
@@ -56,7 +68,23 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           <Text style={styles.sectionTitle}>Mode de l&apos;application</Text>
           <TouchableOpacity
             style={styles.roleToggle}
-            onPress={onToggleRole}
+            onPress={() => {
+              if (!isAssociation) {
+                // Tentative de passer en mode Association
+                if (!isAssociationLoggedIn) {
+                  Alert.alert(
+                    'Connexion requise',
+                    'Vous devez vous connecter en tant qu\'association pour accéder à ce mode.',
+                    [
+                      { text: 'Annuler', style: 'cancel' },
+                      { text: 'Se connecter', onPress: onToggleRole }
+                    ]
+                  );
+                  return;
+                }
+              }
+              onToggleRole();
+            }}
             activeOpacity={0.7}
           >
             <View style={styles.roleInfo}>
@@ -132,6 +160,21 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
               color={Colors.textSecondary}
             />
           </TouchableOpacity>
+
+          {isAssociationLoggedIn && (
+            <TouchableOpacity 
+              style={[styles.settingItem, { borderTopWidth: 1, borderTopColor: Colors.lightGray }]} 
+              onPress={onLogout}
+              activeOpacity={0.7}
+            >
+              <View style={styles.settingInfo}>
+                <Ionicons name="log-out-outline" size={24} color={Colors.error} />
+                <Text style={[styles.settingLabel, { color: Colors.error }]}>
+                  Déconnexion
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
 
         {/* Support CoeurMatch - NOUVELLE SECTION */}

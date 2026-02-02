@@ -110,6 +110,57 @@ app/
 
 ## Version History & Modifications
 
+### Version 1.4 (2026-02-02) - Authentication System for Associations
+
+**PR #6: Add authentication system for associations only**
+
+**Changes:**
+- **LoginScreen**: Email/password login for associations
+  - Validation of credentials
+  - Link to signup flow
+  - Back button to return to profile
+
+- **AssociationSignupStep1Screen**: Essential information collection
+  - Association name, RNA number (W + 9 digits)
+  - Email, phone, address
+  - Password and confirmation
+  - Full field validation with inline error messages
+  - Step indicator (1/2)
+
+- **AssociationSignupStep2Screen**: Optional document upload
+  - Recommended documents list (statuts, récépissé, etc.)
+  - Document upload functionality (placeholder)
+  - Non-blocking: users can complete signup without documents
+  - Step indicator (2/2)
+
+- **ProfileScreen**: Enhanced role toggle
+  - Check authentication before switching to association mode
+  - Display association name when logged in
+  - Logout button for associations
+  - Alert prompt if trying to access association mode without login
+
+- **app/index.tsx**: Authentication state management
+  - `isAssociationLoggedIn` state
+  - `associationAccount` with RNA, email, phone, address
+  - Login/signup/logout handlers
+  - Navigation flow for auth screens
+  - Mock authentication (backend integration pending)
+
+- **Types**: New interfaces
+  - `AssociationSignupStep1Data` for signup form
+  - `AssociationAccount` for logged-in associations
+  - Added `'login'`, `'signup-step1'`, `'signup-step2'` to Screen type
+
+**User Flow:**
+- Donors: No authentication required, direct app access
+- Associations: Must login to access association mode
+- First-time associations: 2-step signup with RNA validation
+- Documents optional but recommended for verification
+
+**Stats**: +XXX additions, -XXX deletions, X files changed
+
+---
+
 ### Version 1.3 (2026-01-28) - Donation System Refactoring
 **PR #4: Refactor donation system - split dev support from association donations**
 
