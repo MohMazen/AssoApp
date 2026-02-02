@@ -36,12 +36,34 @@ export interface Match {
 }
 
 // Écrans de navigation
-export type Screen = 'feed' | 'details' | 'history' | 'admin' | 'profile' | 'donate' | 'payment';
+export type Screen = 'feed' | 'details' | 'history' | 'admin' | 'profile' | 'donate' | 'payment' | 'login' | 'signup-step1' | 'signup-step2';
 
 // Contexte de paiement
 export interface PaymentContext {
   type: 'association' | 'developer';
   card?: Card; // Défini si type === 'association'
+}
+
+// Association signup data
+export interface AssociationSignupStep1Data {
+  associationName: string;
+  rnaNumber: string;
+  email: string;
+  phone: string;
+  address: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface AssociationAccount {
+  id: string;
+  associationName: string;
+  rnaNumber: string;
+  email: string;
+  phone: string;
+  address: string;
+  isVerified: boolean;
+  documents?: string[];
 }
 
 // Legacy type alias for backwards compatibility

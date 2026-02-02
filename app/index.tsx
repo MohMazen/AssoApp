@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { 
   SwipeFeedScreen, 
   DetailsScreen, 
@@ -7,10 +7,13 @@ import {
   AdminPostScreen, 
   DonateScreen,
   ProfileScreen,
-  PaymentScreen 
+  PaymentScreen,
+  LoginScreen,
+  AssociationSignupStep1Screen,
+  AssociationSignupStep2Screen,
 } from '../src/screens';
 import { BottomNav } from '../src/navigation';
-import { Screen, Card, PaymentContext } from '../src/types/Association';
+import { Screen, Card, PaymentContext, AssociationSignupStep1Data, AssociationAccount } from '../src/types/Association';
 import { mockCards } from '../src/constants/mockData';
 
 export default function Index() {
@@ -19,6 +22,9 @@ export default function Index() {
   const [isAssociation, setIsAssociation] = useState(false);
   const [previousScreen, setPreviousScreen] = useState<Screen>('feed');
   const [paymentContext, setPaymentContext] = useState<PaymentContext | null>(null);
+  const [isAssociationLoggedIn, setIsAssociationLoggedIn] = useState(false);
+  const [associationAccount, setAssociationAccount] = useState<AssociationAccount | undefined>(undefined);
+  const [signupStep1Data, setSignupStep1Data] = useState<AssociationSignupStep1Data | undefined>(undefined);
 
   const handleNavigate = useCallback((screen: Screen) => {
     if (screen !== 'details') {
@@ -72,7 +78,82 @@ export default function Index() {
   }, [previousScreen]);
 
   const handleToggleRole = useCallback(() => {
+    if (!isAssociation) {
+      // Tentative de passer en mode Association
+      if (!isAssociationLoggedIn) {
+        // Rediriger vers la page de connexion
+        setPreviousScreen(currentScreen);
+        setCurrentScreen('login');
+        return;
+      }
+    }
     setIsAssociation(prev => !prev);
+  }, [isAssociation, isAssociationLoggedIn, currentScreen]);
+
+  const handleLoginSuccess = useCallback(() => {
+    // TODO: Replace with actual backend authentication
+    // Pour l'instant, créer un compte mock
+    const mockAccount: AssociationAccount = {
+      id: '1',
+      associationName: 'Mon Association',
+      rnaNumber: 'W123456789',
+      email: 'contact@association.fr',
+      phone: '0123456789',
+      address: '123 rue de la Paix, 75000 Paris',
+      isVerified: false,
+    };
+    setAssociationAccount(mockAccount);
+    setIsAssociationLoggedIn(true);
+    setIsAssociation(true);
+    setCurrentScreen('profile');
+  }, []);
+
+  const handleSignupStep1Continue = useCallback((data: AssociationSignupStep1Data) => {
+    setSignupStep1Data(data);
+    setPreviousScreen('signup-step1');
+    setCurrentScreen('signup-step2');
+  }, []);
+
+  const handleSignupStep2Complete = useCallback((documents?: string[]) => {
+    if (!signupStep1Data) return;
+    
+    // Créer le compte association
+    const newAccount: AssociationAccount = {
+      id: Date.now().toString(),
+      associationName: signupStep1Data.associationName,
+      rnaNumber: signupStep1Data.rnaNumber,
+      email: signupStep1Data.email,
+      phone: signupStep1Data.phone,
+      address: signupStep1Data.address,
+      isVerified: false,
+      documents,
+    };
+    
+    setAssociationAccount(newAccount);
+    setIsAssociationLoggedIn(true);
+    setIsAssociation(true);
+    setSignupStep1Data(undefined);
+    setCurrentScreen('profile');
+  }, [signupStep1Data]);
+
+  const handleLogout = useCallback(() => {
+    Alert.alert(
+      'Déconnexion',
+      'Voulez-vous vraiment vous déconnecter ?',
+      [
+        { text: 'Annuler', style: 'cancel' },
+        {
+          text: 'Déconnexion',
+          style: 'destructive',
+          onPress: () => {
+            setIsAssociationLoggedIn(false);
+            setAssociationAccount(undefined);
+            setIsAssociation(false);
+            setCurrentScreen('profile');
+          },
+        },
+      ]
+    );
   }, []);
 
   const handlePublish = useCallback(() => {
@@ -117,8 +198,11 @@ export default function Index() {
         return (
           <ProfileScreen 
             isAssociation={isAssociation}
+            isAssociationLoggedIn={isAssociationLoggedIn}
+            associationAccount={associationAccount}
             onToggleRole={handleToggleRole}
             onDonateToDevPage={handleDonateToDevPage}
+            onLogout={handleLogout}
           />
         );
       case 'payment':
@@ -149,6 +233,37 @@ export default function Index() {
             onPaymentComplete={handlePaymentComplete}
           />
         );
+      case 'login':
+        return (
+          <LoginScreen
+            onLoginSuccess={handleLoginSuccess}
+            onSignupRedirect={() => {
+              setPreviousScreen('login');
+              setCurrentScreen('signup-step1');
+            }}
+            onBack={handleBack}
+          />
+        );
+      case 'signup-step1':
+        return (
+          <AssociationSignupStep1Screen
+            onContinue={handleSignupStep1Continue}
+            onBack={handleBack}
+          />
+        );
+      case 'signup-step2':
+        if (!signupStep1Data) {
+          // Safety check: if no signup data, redirect back
+          setCurrentScreen('signup-step1');
+          return null;
+        }
+        return (
+          <AssociationSignupStep2Screen
+            onComplete={handleSignupStep2Complete}
+            onBack={handleBack}
+            signupData={signupStep1Data}
+          />
+        );
       default:
         return (
           <SwipeFeedScreen 
@@ -158,8 +273,13 @@ export default function Index() {
     }
   };
 
-  // Don't show BottomNav on details screen and payment screen
-  const showBottomNav = currentScreen !== 'details' && currentScreen !== 'payment';
+  // Don't show BottomNav on details screen, payment screen, and auth screens
+  const showBottomNav = 
+    currentScreen !== 'details' && 
+    currentScreen !== 'payment' &&
+    currentScreen !== 'login' &&
+    currentScreen !== 'signup-step1' &&
+    currentScreen !== 'signup-step2';
 
   return (
     <View style={styles.container}>
